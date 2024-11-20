@@ -1,0 +1,239 @@
+body {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 87%, rgba(208,197,217,1) 100%);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.coffee-menu-header a{
+
+    text-decoration: none;
+}
+/* General container styling */
+.container {
+    margin: auto;
+    padding: 20px;
+}
+
+/* Coffee Menu Header */
+.coffee-menu-header {
+    text-align: start;
+    margin-bottom: 30px;
+}
+
+.coffee-menu-header h1 {
+    font-size: 2.5rem;
+    color: #2D635E;
+}
+
+.coffee-menu-header p {
+    color: #6c757d;
+}
+
+/* Add to Cart Section */
+.add-cart {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+
+    border-radius: 50px 50px 0 0;
+    position: relative;
+}
+
+.add-cart img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    
+}
+.add-cart img:hover{
+    transform: scale(1.25);
+}
+
+.add-cart span.quantity {
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: px;
+    right: 16px;
+    border: 2px solid #fff; /* Adds a neat white border around the count */
+}
+
+/* Category Buttons */
+.category-buttons {
+    margin: 20px 0;
+}
+
+.category-buttons button {
+    background-color: #2D635E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.category-buttons button:hover {
+    background-color: #1C473F;
+    transform: scale(1.05);
+}
+
+/* Coffee Menu Items */
+.coffee-menu .card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    
+}
+
+.coffee-menu{
+    padding-bottom: 60px;
+}
+
+.coffee-menu .card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.coffee-menu .card-title {
+    font-size: 1.25rem;
+    color: #2D635E;
+}
+
+.coffee-menu .card-text {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.coffee-menu .btn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.coffee-menu .btn-view {
+    color: #2D635E;
+    border: 2px solid #2D635E;
+}
+
+.coffee-menu .btn-view:hover {
+    background-color: #2D635E;
+    color: white;
+}
+
+.coffee-menu .btn-get {
+    background-color: #2D635E;
+    color: white;
+}
+
+.coffee-menu .btn-get:hover {
+    background-color: #1C473F;
+}
+
+/* Cart Sidebar */
+#card {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+body.active #card {
+    right: 0;
+}
+
+#card h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #2D635E;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+
+#card .listCard {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+#card .checkout {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+#card .checkout .total {
+    font-size: 1.2rem;
+    color: #2D635E;
+    font-weight: bold;
+}
+
+#card .closeShopping {
+    text-align: center;
+    background-color: #2D635E;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.container .popup-image{
+    position: fixed;
+    top: 0; left: 0;
+    background-color: rgb(0, 0,0,.6);
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    display: none;
+}
+.container .popup-image span{
+    position: absolute;
+    top: 0; right: 10px;
+    font-size: 60px;
+    font-weight: bolder;
+    color: white;
+    cursor: pointer;
+    z-index: 100;
+}
+.container .popup-image img{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid white;
+    border-radius: 5px;
+    width: 750px;
+    object-fit: cover;
+
+}
+@media (max-width: 768px){
+    .container .popup-image img{
+        width: 95%;
+    }
+}
+.image-container{
+    display: none;
+}
