@@ -1,0 +1,17 @@
+.navbar-brand {
+    font-family: "Brush Script MT", cursive;
+    font-size: 1.5rem;
+}
+.post-title {
+    font-weight: bold;
+}
+.view-buttons {
+    display: flex;
+    align-items: center;
+}
+.view-buttons span {
+    margin-right: 5px;
+}
+.pagination li a {
+    color: #6c757d;
+}
