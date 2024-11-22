@@ -57,16 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const cartItem = document.createElement('li');
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
-                <div style="margin-bottom: 10px;">
-                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;">
-                </div>
-                <div>${item.name}</div>
-                <div>₱${item.price.toLocaleString()}</div>
-                <div>
-                    <button onclick="changeQuantity(${item.id}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="changeQuantity(${item.id}, 1)">+</button>
-                </div>
+                <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">
+        <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-bottom: 20px">
+    </div>
+    <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">${item.name}</div>
+    <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">₱${item.price.toLocaleString()}</div>
+    <div style="display: inline-block; vertical-align: middle;">
+        <div style="display: flex; justify-content: space-evenly; align-items: center; gap: 20px;">
+        <button onclick="changeQuantity(${item.id}, -1)">-</button>
+        <span>${item.quantity}</span>
+        <button onclick="changeQuantity(${item.id}, 1)">+</button>
+    </div>
+
+    </div>
             `;
             listCard.appendChild(cartItem);
         });
@@ -78,7 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const buyButton = document.createElement('div');
             buyButton.classList.add('buy-button');
             buyButton.innerHTML = `
-                <button class="btn btn-success style="padding:10px; margin=10px;"" onclick="checkoutCart()">Buy</button>
+                <div style="text-align: center; width: 100%;">
+    <button class="btn btn-success" style="width: 100%;  padding: 20px; font-size: 24px; border-radius: 10px;" onclick="checkoutCart()"><b>Buy</b></button>
+</div>
+
+
             `;
             listCard.appendChild(buyButton);
         }
