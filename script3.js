@@ -7,8 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const quantityElement = document.querySelector('.quantity');
     const getButtons = document.querySelectorAll('.btn-get');
     const receiptModal = document.createElement('div');
-
-    let cart = []; // To hold cart items
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize an empty array
+    let totalSales = {}; // Object to store total sales for each item by its ID
 
     openShopping.addEventListener('click', () => {
         body.classList.add('active');
@@ -20,56 +21,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const products = [
         { id: 1, name: 'Matcha', image: 'assets/img/coffee/matcha.jpg', price: 120 },
-    { id: 2, name: 'Iced Latte', image: 'assets/img/coffee/iced latte.jpg', price: 125 },
-    { id: 3, name: 'Frappe', image: 'assets/img/coffee/frappe.jpg', price: 130 },
-    { id: 4, name: 'Coffee Jelly', image: 'assets/img/coffee/jelly.jpg', price: 135 },
-    { id: 5, name: 'Coffee Shade', image: 'assets/img/coffee/shade.jpg', price: 120 },
-    { id: 6, name: 'Coffee Caramel', image: 'assets/img/coffee/caramel.jpg', price: 125 },
-    { id: 7, name: 'Pumpkin Coffee', image: 'assets/img/coffee/pumpkin.jpg', price: 135 },
-    { id: 8, name: 'Choco Coffee', image: 'assets/img/coffee/choco.jpg', price: 140 },
+        { id: 2, name: 'Iced Latte', image: 'assets/img/coffee/iced latte.jpg', price: 125 },
+        { id: 3, name: 'Frappe', image: 'assets/img/coffee/frappe.jpg', price: 130 },
+        { id: 4, name: 'Coffee Jelly', image: 'assets/img/coffee/jelly.jpg', price: 135 },
+        { id: 5, name: 'Coffee Shade', image: 'assets/img/coffee/shade.jpg', price: 120 },
+        { id: 6, name: 'Coffee Caramel', image: 'assets/img/coffee/caramel.jpg', price: 125 },
+        { id: 7, name: 'Pumpkin Coffee', image: 'assets/img/coffee/pumpkin.jpg', price: 135 },
+        { id: 8, name: 'Choco Coffee', image: 'assets/img/coffee/choco.jpg', price: 140 },
     ];
 
+    // Function to update localStorage with the latest cart and totalSales
+    const saveCartToLocalStorage = () => {
+        const cartData = {
+            version: (JSON.parse(localStorage.getItem('cartVersion')) || 0) + 1, // Increment version number
+            cart: cart.map(item => ({
+                ...item,
+                sales: item.price * item.quantity // Add sales key to each item
+            })),
+            totalSales // Store the totalSales object in localStorage
+        };
+        localStorage.setItem('cart', JSON.stringify(cartData.cart));
+        localStorage.setItem('cartVersion', cartData.version); // Save version
+        localStorage.setItem('totalSales', JSON.stringify(cartData.totalSales)); // Save totalSales
+    };
+
+    // Function to add product to the cart
     const addToCart = (productId) => {
         const product = products.find(item => item.id === productId);
-
         if (!product) return;
 
         const existingItem = cart.find(item => item.id === productId);
-
         if (existingItem) {
-            existingItem.quantity += 1; 
+            existingItem.quantity += 1;
         } else {
             cart.push({ ...product, quantity: 1 });
         }
 
+        // Update totalSales for the product
+        totalSales[productId] = product.price * existingItem?.quantity || product.price;
+
         updateCart();
+        saveCartToLocalStorage(); // Save the updated cart and totalSales
     };
 
+    // Function to update the cart display
     const updateCart = () => {
         listCard.innerHTML = '';
         let total = 0;
         let quantity = 0;
 
         cart.forEach(item => {
-            total += item.price * item.quantity;
+            // Calculate the sales value for each item
+            item.sales = item.price * item.quantity;
+            total += item.sales;
             quantity += item.quantity;
 
             const cartItem = document.createElement('li');
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
                 <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">
-        <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-bottom: 20px">
-    </div>
-    <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">${item.name}</div>
-    <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">₱${item.price.toLocaleString()}</div>
-    <div style="display: inline-block; vertical-align: middle;">
-        <div style="display: flex; justify-content: space-evenly; align-items: center; gap: 20px;">
-        <button onclick="changeQuantity(${item.id}, -1)">-</button>
-        <span>${item.quantity}</span>
-        <button onclick="changeQuantity(${item.id}, 1)">+</button>
-    </div>
-
-    </div>
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-bottom: 20px">
+                </div>
+                <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">${item.name}</div>
+                <div style="display: inline-block; margin-right: 10px; vertical-align: middle;">₱${item.price.toLocaleString()}</div>
+                <div style="display: inline-block; vertical-align: middle;">
+                    <div style="display: flex; justify-content: space-evenly; align-items: center; gap: 20px;">
+                        <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                </div>
+                <div style="display: inline-block; vertical-align: middle;">₱${item.sales.toLocaleString()}</div> <!-- Display sales -->
             `;
             listCard.appendChild(cartItem);
         });
@@ -82,15 +104,16 @@ document.addEventListener("DOMContentLoaded", () => {
             buyButton.classList.add('buy-button');
             buyButton.innerHTML = `
                 <div style="text-align: center; width: 100%;">
-    <button class="btn btn-success" style="width: 100%;  padding: 20px; font-size: 24px; border-radius: 10px;" onclick="checkoutCart()"><b>Buy</b></button>
-</div>
-
-
+                    <button class="btn btn-success" style="width: 100%; padding: 20px; font-size: 24px; border-radius: 10px;" onclick="checkoutCart()"><b>Buy</b></button>
+                </div>
             `;
             listCard.appendChild(buyButton);
         }
+
+        saveCartToLocalStorage(); // Save the updated cart and totalSales
     };
 
+    // Change quantity function
     window.changeQuantity = (productId, delta) => {
         const item = cart.find(item => item.id === productId);
 
@@ -99,14 +122,20 @@ document.addEventListener("DOMContentLoaded", () => {
             if (item.quantity <= 0) {
                 cart = cart.filter(item => item.id !== productId);
             }
+
+            // Update totalSales for the product
+            totalSales[productId] = item.price * item.quantity;
+
             updateCart();
         }
     };
 
+    // Generate order ID
     const generateOrderId = () => {
         return `ORD-${Date.now()}`;
     };
 
+    // Function to checkout the cart
     window.checkoutCart = () => {
         if (cart.length === 0) {
             alert("Your cart is empty!");
@@ -114,52 +143,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const orderId = generateOrderId();
-        let receipt = `Receipt:\n\nOrder ID: ${orderId}\n\n`;
-        let total = 0;
+        const orderDate = new Date().toISOString();
 
-        cart.forEach(item => {
-            receipt += `${item.quantity} x ${item.name} - ₱${(item.price * item.quantity).toLocaleString()}\n`;
-            total += item.price * item.quantity;
-        });
+        const order = {
+            orderId,
+            date: orderDate,
+            products: cart.map(item => ({
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                sales: item.sales // Store sales in order
+            }))
+        };
 
-        receipt += `\nTotal: ₱${total.toLocaleString()}\n\nThank you for your purchase!`;
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
 
-        showReceipt(receipt, orderId);
-
-        // Clear cart
-        cart = [];
-        updateCart();
+        cart = []; // Clear the cart after purchase
+        updateCart(); // Update the display
     };
 
-    const downloadReceipt = (receipt, orderId) => {
-        const blob = new Blob([receipt], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `Receipt-${orderId}.txt`;
-        link.click();
-    };
+    // Initialize the cart and update the display
+    updateCart();
 
-    const showReceipt = (receipt, orderId) => {
-        receiptModal.innerHTML = `
-            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999;">
-                <h4>Order</h4>
-                <pre style="white-space: pre-wrap; word-wrap: break-word;">${receipt}</pre>
-                <button class="btn btn-success" onclick="downloadReceipt('${receipt.replace(/'/g, "\\'")}', '${orderId}')">Download Receipt</button>
-                <button class="btn btn-secondary" onclick="closeReceipt()">Close</button>
-            </div>
-            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998;" onclick="closeReceipt()"></div>
-        `;
-        document.body.appendChild(receiptModal);
-    };
-
-    window.closeReceipt = () => {
-        receiptModal.innerHTML = '';
-    };
-
+    // Add event listeners for "Get" buttons
     getButtons.forEach((button, index) => {
         button.addEventListener('click', () => addToCart(products[index].id));
     });
 });
-
-
-

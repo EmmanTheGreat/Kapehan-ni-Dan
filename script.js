@@ -35,31 +35,51 @@ signUpForm.addEventListener('submit', function(event) {
 });
 
 // Sign In Functionality
-const signInForm = document.getElementById('signInForm');
-signInForm.addEventListener('submit', function(event) {
-    event.preventDefault();
+document.getElementById('signInForm').addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission
 
-    const email = document.getElementById('signInEmail').value.trim();
-    const password = document.getElementById('signInPassword').value.trim();
-
-    if (!email || !password) {
-        alert("Both email and password are required to log in.");
-        return;
-    }
+    const email = document.getElementById('signInEmail').value; // Get entered email
+    const password = document.getElementById('signInPassword').value; // Get entered password
+    const role = document.getElementById('userRole').value; // Get selected role
 
     // Retrieve user data from localStorage
     const storedUserData = localStorage.getItem(email);
 
     if (!storedUserData) {
         alert("No account found with this email. Please sign up.");
-    } else {
-        const userData = JSON.parse(storedUserData);
-        if (userData.password === password) {
-            alert(`Welcome to Kapehan ni Dan, ${userData.name}!`);
-            signInForm.reset();
-            window.location.href = "index2.html"; // Redirect after successful login
-        } else {
-            alert("Incorrect password. Please try again.");
-        }
+        return; // Exit function early if no user data
+    } 
+
+    const userData = JSON.parse(storedUserData);
+
+    if (userData.password !== password) {
+        alert("Incorrect password. Please try again.");
+        return; // Exit function early if password is incorrect
     }
+
+    // Password is correct, now handle role-based validation
+    if (role === 'admin') {
+        if (email === 'admin1@gmail.com' && password === 'admin123') {
+            window.location.href = 'admin.html'; // Redirect to admin page
+            return; // Prevent further code execution
+        } else {
+            alert("Invalid credentials for the selected role.");
+            return; // Exit function early if role is invalid
+        }
+    } else if (role === 'customer') {
+        window.location.href = 'index2.html'; // Redirect to customer page
+        return; // Prevent further code execution
+    } else {
+        alert("Invalid credentials for the selected role.");
+        return; // Exit function early if role is invalid
+    }
+
+    // If role and password are correct, show welcome message
+    alert(`Welcome to Kapehan ni Dan, ${userData.name}!`);
+
+    // Reset the form only if no redirection has happened
+    signInForm.reset();
 });
+
+
+
