@@ -1,33 +1,65 @@
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
-const signInButton = document.getElementById('signInButton'); // Select the Sign In button in the form
+const signInButton = document.getElementById('signInButton');
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
-});
+// Toggle between login and register forms
+registerBtn.addEventListener('click', () => container.classList.add("active"));
+loginBtn.addEventListener('click', () => container.classList.remove("active"));
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
+// Sign Up Functionality
+const signUpForm = document.getElementById('signUpForm');
+signUpForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-// Redirect to index.html when the Sign In button in the form is clicked
-signInButton.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    window.location.href = "index.html";
-});
+    const name = document.getElementById('signUpName').value.trim();
+    const email = document.getElementById('signUpEmail').value.trim();
+    const password = document.getElementById('signUpPassword').value.trim();
 
-
-//sample validation
-/*function fun(){
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-
-    if (email == 'user@gmail.com' && password == '12345'){
-        alert('Login Sucessful!')
-        window.location.assign('index.html')
+    // Input validation
+    if (!name || !email || !password) {
+        alert("All fields are required for registration.");
+        return;
     }
-    else{
-        alert('Invalid entry')
+
+    // Check if account already exists
+    if (localStorage.getItem(email)) {
+        alert("An account with this email already exists. Please log in.");
+    } else {
+        // Save user data in localStorage
+        const userData = { name, password };
+        localStorage.setItem(email, JSON.stringify(userData));
+        alert("Sign up Successful! You can now log in.");
+        signUpForm.reset();
     }
-}*/
+});
+
+// Sign In Functionality
+const signInForm = document.getElementById('signInForm');
+signInForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('signInEmail').value.trim();
+    const password = document.getElementById('signInPassword').value.trim();
+
+    if (!email || !password) {
+        alert("Both email and password are required to log in.");
+        return;
+    }
+
+    // Retrieve user data from localStorage
+    const storedUserData = localStorage.getItem(email);
+
+    if (!storedUserData) {
+        alert("No account found with this email. Please sign up.");
+    } else {
+        const userData = JSON.parse(storedUserData);
+        if (userData.password === password) {
+            alert(`Welcome to Kapehan ni Dan, ${userData.name}!`);
+            signInForm.reset();
+            window.location.href = "index2.html"; // Redirect after successful login
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    }
+});

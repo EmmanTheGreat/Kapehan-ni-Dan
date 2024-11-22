@@ -13,23 +13,21 @@
 
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form id="signUpForm">
                 <h1>Create Account</h1>
-               
-                
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button>Sign Up</button>
+                <input type="text" id="signUpName" placeholder="Name" required>
+                <input type="email" id="signUpEmail" placeholder="Email" required>
+                <input type="password" id="signUpPassword" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form id="signInForm">
                 <h1>Sign In</h1>
-                <input type="email" id="email" placeholder="Email">
-                <input type="password" id="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
-                <button id="signInButton">Sign in</button>
+                <input type="email" id="signInEmail" placeholder="Email" required>
+                <input type="password" id="signInPassword" placeholder="Password" required>
+                <a href="#">Forgot Your Password?</a>
+                <button type="submit">Sign In</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -41,7 +39,7 @@
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>Hello!</h1>
-                    <p>Don't have an acccount yet?</p>
+                    <p>Don't have an account yet?</p>
                     <button class="hidden" id="register">Sign Up</button>
                 </div>
             </div>
