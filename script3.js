@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const getButtons = document.querySelectorAll('.btn-get');
     const receiptModal = document.createElement('div');
     
-    //start here
     let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize an empty array
     let totalSales = {}; // Object to store total sales for each item by its ID
 
@@ -142,10 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Your cart is empty!");
             return;
         }
-
+    
         const orderId = generateOrderId();
         const orderDate = new Date().toISOString();
-
+    
         const order = {
             orderId,
             date: orderDate,
@@ -157,14 +156,70 @@ document.addEventListener("DOMContentLoaded", () => {
                 sales: item.sales // Store sales in order
             }))
         };
-
+    
+        // Store order in localStorage
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         orders.push(order);
         localStorage.setItem('orders', JSON.stringify(orders));
-
-        cart = []; // Clear the cart after purchase
-        updateCart(); // Update the display
+    
+        // Clear the cart after purchase
+        cart = [];
+        updateCart();
+    
+        // Generate receipt content
+        let receiptText = `Receipt\n\n`;
+        receiptText += `Order ID: ${order.orderId}\n`;
+        receiptText += `Date: ${new Date(orderDate).toLocaleString()}\n\n`;
+        receiptText += `Products:\n`;
+        receiptText += `------------------------------------------\n`;
+    
+        order.products.forEach(item => {
+            receiptText += `${item.name} - ₱${item.price.toLocaleString()} x ${item.quantity} = ₱${item.sales.toLocaleString()}\n`;
+        });
+    
+        const total = order.products.reduce((total, item) => total + item.sales, 0);
+        receiptText += `------------------------------------------\n`;
+        receiptText += `Total: ₱${total.toLocaleString()}\n\n`;
+        receiptText += `Thank you for your purchase!`;
+    
+        // Display receipt in an alert
+        alert(receiptText);
+    
+        // Add a "Download Receipt" button dynamically for user choice
+        const createDownloadButton = () => {
+            const downloadButton = document.createElement('button');
+            downloadButton.textContent = 'Download Receipt';
+            downloadButton.classList.add('btn', 'btn-primary');
+            downloadButton.style.marginTop = '20px';
+            downloadButton.style.padding = '10px 20px';
+            downloadButton.style.fontSize = '16px';
+            downloadButton.style.borderRadius = '5px';
+        
+            // Add functionality to download the receipt when the button is clicked
+            downloadButton.addEventListener('click', () => {
+                const blob = new Blob([receiptText], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `Receipt-${orderId}.txt`; // Set the filename
+                document.body.appendChild(link); // Append to the DOM temporarily
+                link.click(); // Trigger download
+                document.body.removeChild(link); // Remove link after download
+            });
+        
+            // Append the download button to the container
+            receiptContainer.appendChild(downloadButton);
+        };
+        
+        // Show a confirmation dialog to the user
+        if (confirm("Do you want to download the receipt?")) {
+            // If the user confirms, create and show the download button
+            createDownloadButton();
+        } else {
+            // If the user declines, show a message or keep the container empty
+            receiptContainer.textContent = "Download option was declined.";
+        }
     };
+    
 
     // Initialize the cart and update the display
     updateCart();
@@ -173,46 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     getButtons.forEach((button, index) => {
         button.addEventListener('click', () => addToCart(products[index].id));
     });
-    //end here
 });
-
-// Get the products from local storage
-const products = JSON.parse(localStorage.getItem('products'));
-
-// Check if products exist
-if (products && Array.isArray(products)) {
-    // Iterate through the products array
-    products.forEach(product => {
-        // Set default values if the fields are empty
-        const name = product.name || 'Unnamed Product';
-        const price = product.price || 'N/A';
-        const image = product.image || 'assets/img/default.jpg';  // Default image if no image is provided
-
-        // Create the HTML content for each product
-        const productHTML = `
-            <div class="card border-0">
-                <img src="${image}" class="card-img-top" alt="${name}">
-                <div class="card-body text-start">
-                    <h5 class="card-title">${name}</h5>
-                    <p class="card-text">₱${price}</p>
-                    <div class="row">
-                        <div class="col-6 align-items-center">
-                            <button class="btn btn-outline-dark btn-view">View</button>
-                        </div>
-                        <div class="col-6 align-items-center">
-                            <button class="btn btn-dark btn-get">Get</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Append the product HTML to the desired container (example: a div with id 'product-container')
-        document.getElementById('product-container').innerHTML += productHTML;
-    });
-} else {
-    console.log('No products found in local storage');
-}
 
   
 
