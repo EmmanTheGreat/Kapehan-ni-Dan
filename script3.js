@@ -186,38 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(receiptText);
     
         // Add a "Download Receipt" button dynamically for user choice
-        const createDownloadButton = () => {
-            const downloadButton = document.createElement('button');
-            downloadButton.textContent = 'Download Receipt';
-            downloadButton.classList.add('btn', 'btn-primary');
-            downloadButton.style.marginTop = '20px';
-            downloadButton.style.padding = '10px 20px';
-            downloadButton.style.fontSize = '16px';
-            downloadButton.style.borderRadius = '5px';
         
-            // Add functionality to download the receipt when the button is clicked
-            downloadButton.addEventListener('click', () => {
-                const blob = new Blob([receiptText], { type: 'text/plain' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = `Receipt-${orderId}.txt`; // Set the filename
-                document.body.appendChild(link); // Append to the DOM temporarily
-                link.click(); // Trigger download
-                document.body.removeChild(link); // Remove link after download
-            });
-        
-            // Append the download button to the container
-            receiptContainer.appendChild(downloadButton);
-        };
-        
-        // Show a confirmation dialog to the user
-        if (confirm("Do you want to download the receipt?")) {
-            // If the user confirms, create and show the download button
-            createDownloadButton();
-        } else {
-            // If the user declines, show a message or keep the container empty
-            receiptContainer.textContent = "Download option was declined.";
-        }
     };
     
 
