@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const getButtons = document.querySelectorAll('.btn-get');
     const receiptModal = document.createElement('div');
     
+    //start here
     let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize an empty array
     let totalSales = {}; // Object to store total sales for each item by its ID
 
@@ -172,7 +173,46 @@ document.addEventListener("DOMContentLoaded", () => {
     getButtons.forEach((button, index) => {
         button.addEventListener('click', () => addToCart(products[index].id));
     });
+    //end here
 });
+
+// Get the products from local storage
+const products = JSON.parse(localStorage.getItem('products'));
+
+// Check if products exist
+if (products && Array.isArray(products)) {
+    // Iterate through the products array
+    products.forEach(product => {
+        // Set default values if the fields are empty
+        const name = product.name || 'Unnamed Product';
+        const price = product.price || 'N/A';
+        const image = product.image || 'assets/img/default.jpg';  // Default image if no image is provided
+
+        // Create the HTML content for each product
+        const productHTML = `
+            <div class="card border-0">
+                <img src="${image}" class="card-img-top" alt="${name}">
+                <div class="card-body text-start">
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">₱${price}</p>
+                    <div class="row">
+                        <div class="col-6 align-items-center">
+                            <button class="btn btn-outline-dark btn-view">View</button>
+                        </div>
+                        <div class="col-6 align-items-center">
+                            <button class="btn btn-dark btn-get">Get</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Append the product HTML to the desired container (example: a div with id 'product-container')
+        document.getElementById('product-container').innerHTML += productHTML;
+    });
+} else {
+    console.log('No products found in local storage');
+}
 
   
 

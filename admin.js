@@ -208,3 +208,22 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
     const modal = bootstrap.Modal.getInstance(document.getElementById("productModal"));
     modal.hide();
 });
+
+const storedData = localStorage.getItem('admin1@gmail.com');
+        
+        if (storedData) {
+            const adminData = JSON.parse(storedData);
+            
+            // Replace the content of the admin element with the name
+            const adminElement = document.getElementById('admin');
+            adminElement.textContent = adminData.name || "Admin"; // Default to 'Admin' if name is not available
+        } else {
+            console.warn("No admin data found in local storage.");
+        }
+
+// Initialize product list on page load
+document.addEventListener("DOMContentLoaded", function () {
+    const products = loadProductsFromLocalStorage();
+    updateProductTable(products);
+    updateProductCount();
+});
