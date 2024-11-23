@@ -173,3 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener('click', () => addToCart(products[index].id));
     });
 });
+
+  
+

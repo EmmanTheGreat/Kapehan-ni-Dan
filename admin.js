@@ -153,3 +153,58 @@ document.addEventListener("DOMContentLoaded", updateTotalSales);
 // Call the function to update the total sales when the page loads
 document.addEventListener("DOMContentLoaded", updateTotalSales);
 
+// Function to update or add a product in localStorage
+function saveProductToLocalStorage(products) {
+    localStorage.setItem('products', JSON.stringify(products));
+}
+
+// Function to load products from localStorage
+function loadProductsFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('products')) || [];
+}
+
+document.getElementById("productForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const productName = document.getElementById("productName").value;
+    const productPrice = document.getElementById("productPrice").value;
+    const productImage = document.getElementById("productImage").files[0];
+
+    let imageURL = "";
+    if (productImage) {
+        imageURL = URL.createObjectURL(productImage);
+    }
+
+    // Get existing products from localStorage
+    let products = loadProductsFromLocalStorage();
+
+    if (currentEditRow) {
+        // Update existing product
+        const productId = currentEditRow.dataset.productId;
+        const product = products.find(p => p.id === productId);
+        product.name = productName;
+        product.price = productPrice;
+        product.image = imageURL || product.image;
+    } else {
+        // Add new product
+        const newProduct = {
+            id: Date.now().toString(), // Generate unique product ID based on timestamp
+            name: productName,
+            price: productPrice,
+            image: imageURL,
+        };
+        products.push(newProduct);
+    }
+
+    // Save updated product list to localStorage
+    saveProductToLocalStorage(products);
+
+    // Update the product list table
+    updateProductTable(products);
+    
+    // Reset the form and close modal
+    this.reset();
+    currentEditRow = null;
+    const modal = bootstrap.Modal.getInstance(document.getElementById("productModal"));
+    modal.hide();
+});
