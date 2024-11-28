@@ -29,8 +29,11 @@ signUpForm.addEventListener('submit', function(event) {
         // Save user data in localStorage
         const userData = { name, password };
         localStorage.setItem(email, JSON.stringify(userData));
-        alert("Sign up Successful! You can now log in.");
+        alert(`Sign up Successful! You can now log in ${userData.name}.`);
         signUpForm.reset();
+
+        // Automatically switch to the login form
+        container.classList.remove("active");
     }
 });
 
