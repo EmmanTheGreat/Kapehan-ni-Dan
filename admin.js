@@ -48,6 +48,8 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
         currentEditRow.cells[1].querySelector("img").src = imageURL || currentEditRow.cells[1].querySelector("img").src;
         currentEditRow.cells[2].textContent = productName;
         currentEditRow.cells[3].textContent = productPrice;
+
+        alert("Product successfully updated!");
     } else {
         // Add a new row
         const newRow = productTable.insertRow();
@@ -55,7 +57,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
             <th scope="row">${productTable.rows.length}</th>
             <td><img src="${imageURL}" alt="Product Image" class="img-thumbnail" style="width: 50px; height: 50px;"></td>
             <td>${productName}</td>
-            <td>${productPrice}</td>
+            <td>₱${productPrice}</td>
             <td>
                 <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                 <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -65,6 +67,8 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
         // Add event listeners to new buttons
         newRow.querySelector(".editBtn").addEventListener("click", editProduct);
         newRow.querySelector(".deleteBtn").addEventListener("click", deleteProduct);
+
+        alert("Product successfully added!");
 
         // Update product count
         updateProductCount();
@@ -82,17 +86,32 @@ function editProduct() {
     document.getElementById("productName").value = currentEditRow.cells[2].textContent;
     document.getElementById("productPrice").value = currentEditRow.cells[3].textContent;
     document.getElementById("productImage").value = ""; // Clear the file input
+     
 }
 
+
 function deleteProduct() {
-    const row = this.closest("tr");
-    row.remove();
-    // Update row numbers
-    [...productTable.rows].forEach((row, index) => {
-        row.cells[0].textContent = index + 1;
-    });
-    // Update product count
-    updateProductCount();
+    // Ask for confirmation before deleting
+    const isConfirmed = confirm("Are you sure you want to delete this product?");
+
+    if (isConfirmed) {
+        const row = this.closest("tr");
+        row.remove();
+
+        // Update row numbers after deletion
+        [...productTable.rows].forEach((row, index) => {
+            row.cells[0].textContent = index + 1; // Update row numbers
+        });
+
+        // Update product count
+        updateProductCount();
+
+        // Show success alert after deletion
+        alert("Product successfully deleted!");
+    } else {
+        // If the user cancels, do nothing
+        console.log("Product deletion canceled.");
+    }
 }
 
 // Function to update the total number of orders
