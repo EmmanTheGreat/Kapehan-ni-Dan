@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage or initialize an empty array
     let totalSales = {}; // Object to store total sales for each item by its ID
+    let firstClick = true; //
+    let secondClick = true; //  
 
     openShopping.addEventListener('click', () => {
         body.classList.add('active');
@@ -62,6 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateCart();
         saveCartToLocalStorage(); // Save the updated cart and totalSales
+    
+        // Check if it's the first click
+        if (firstClick) {
+            // Open the side panel on the first click
+            body.classList.add('active');
+            firstClick = false; // Set firstClick to false after opening the panel once
+        } 
+        else if (secondClick){
+            body.classList.add('active');
+            alert('Press the cup to view the icon');
+            secondClick = false;
+        }
     };
 
     // Function to update the cart display
