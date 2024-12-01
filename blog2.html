@@ -14,16 +14,17 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm navmenu">
             <div class="container py-3">
                 <img src="assets/img/kape.png" alt="" style="border-radius: 40px; height: 60px; width: 60px;">
                 <a class="navbar-brand" href="#"><b>Kapehan ni Dan</b></a>
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto ">
                     <li class="nav-item px-4"><a class="nav-link" href="index2.html"><b>About us</b></a></li>
                     <li class="nav-item px-4"><a class="nav-link" href="shop.html"><b>Shop</b></a></li>
-                    <li class="nav-item">
-                        
+                    <li class="nav-item px-4 nav-link">
+                           
                     </li>
+                    
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createPostModal">Write Post</button>
                     
                 </ul>
@@ -67,7 +68,11 @@
 
     <main class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="post-title">Blog Feed</h2>
+            <h2 class="post-title">Blog Feed </h2>
+            <div class="user-container">
+                <span id="current-user">Hello, User!</span>
+            </div>
+           
         
         </div>
         <div id="blog-posts">

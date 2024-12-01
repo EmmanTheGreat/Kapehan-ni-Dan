@@ -284,3 +284,42 @@ body.active #card {
 .image-container{
     display: none;
 }
+/* General Styling */
+.user-container {
+    display: inline-block;
+    text-align: center;
+}
+
+#current-user {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2D635E; /* Soft blue color */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover Effect */
+#current-user:hover {
+    color: #000000; /* Soft coral on hover */
+    transform: scale(1.1); /* Slight enlargement */
+}
+
+/* Underline Animation */
+#current-user::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #2D635E; /* Same as hover text color */
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+/* Expand underline on hover */
+#current-user:hover::after {
+    width: 100%;
+}
