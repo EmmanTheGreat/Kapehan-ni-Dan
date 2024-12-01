@@ -126,6 +126,7 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Price</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -136,6 +137,7 @@
                                         <td><img src="assets/img/coffee/matcha.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Matcha</td>
                                         <td>₱120</td>
+                                        <td><span class="short-description">A delicious matcha drink made from premium green tea powder.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -146,6 +148,7 @@
                                         <td><img src="assets/img/coffee/iced latte.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Iced Latte</td>
                                         <td>₱125</td>
+                                        <td><span class="short-description">Chilled espresso combined with creamy milk for a smooth, refreshing taste.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -156,6 +159,7 @@
                                         <td><img src="assets/img/coffee/frappe.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Frappe</td>
                                         <td>₱135</td>
+                                        <td><span class="short-description">Blended ice, coffee, and milk for a rich, creamy, and frosty treat.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -166,6 +170,7 @@
                                         <td><img src="assets/img/coffee/jelly.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Coffee Jelly</td>
                                         <td>₱125</td>
+                                        <td><span class="short-description">Espresso jelly served with creamy milk and ice, a unique, refreshing dessert drink.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -176,6 +181,7 @@
                                         <td><img src="assets/img/coffee/shade.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Shade</td>
                                         <td>₱130</td>
+                                        <td><span class="short-description">A mellow coffee made with beans grown under shade for a unique, rich flavor.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -186,6 +192,7 @@
                                         <td><img src="assets/img/coffee/caramel.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Caramel</td>
                                         <td>₱125</td>
+                                        <td><span class="short-description">A smooth, sweet coffee drink with rich caramel flavor, topped with whipped cream.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -196,6 +203,7 @@
                                         <td><img src="assets/img/coffee/pumpkin.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Pumpkin Coffee</td>
                                         <td>₱135</td>
+                                        <td><span class="short-description">A seasonal coffee drink infused with rich pumpkin spice for a cozy, fall-inspired flavor.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -206,6 +214,7 @@
                                         <td><img src="assets/img/coffee/choco.jpg" class="img-thumbnail" alt="" style="height: 50px; width: 50px;"></td>
                                         <td>Choco Coffee</td>
                                         <td>₱140</td>
+                                        <td><span class="short-description">A decadent blend of rich chocolate and smooth coffee, topped with whipped cream.</span></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                                             <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -219,36 +228,41 @@
                 
                 <!-- Modal for Adding/Editing Products -->
                 <!-- Modal for Adding/Editing Products -->
-<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="productForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">Add/Edit Product</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName" required>
+                <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="productForm">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="productModalLabel">Add/Edit Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="productName" class="form-label">Product Name</label>
+                                        <input type="text" class="form-control" id="productName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="productPrice" class="form-label">Price</label>
+                                        <input type="number" class="form-control" id="productPrice" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="productDescription" class="form-label">Product Description</label>
+                                        <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="productImage" class="form-label">Product Image</label>
+                                        <input type="file" class="form-control" id="productImage" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="productPrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="productPrice" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="productImage" class="form-label">Product Image</label>
-                        <input type="file" class="form-control" id="productImage" accept="image/*">
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                
 
                 
 

@@ -100,13 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (firstClick) {
             // Open the side panel on the first click
             body.classList.add('active');
-            firstClick = false; // Set firstClick to false after opening the panel once
+            firstClick = true; // Set firstClick to false after opening the panel once
         } 
-        else if (secondClick){
-            body.classList.add('active');
-            alert('Press the cup to view the cart');
-            secondClick = false;
-        }
+       
     };
 
     // Function to update the cart display

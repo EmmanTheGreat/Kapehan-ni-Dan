@@ -323,3 +323,19 @@ body.active #card {
 #current-user:hover::after {
     width: 100%;
 }
+
+.card-description {
+    display: none; /* Hide description initially */
+    position: absolute;
+    bottom: 150px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.card:hover .card-description {
+    display: block; /* Show description on hover */
+}

@@ -36,6 +36,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
 
     const productName = document.getElementById("productName").value;
     const productPrice = document.getElementById("productPrice").value;
+    const productDescription = document.getElementById("productDescription").value;
     const productImage = document.getElementById("productImage").files[0];
 
     let imageURL = "";
@@ -48,6 +49,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
         currentEditRow.cells[1].querySelector("img").src = imageURL || currentEditRow.cells[1].querySelector("img").src;
         currentEditRow.cells[2].textContent = productName;
         currentEditRow.cells[3].textContent = productPrice;
+        currentEditRow.cells[4].textContent = productDescription;
 
         alert("Product successfully updated!");
     } else {
@@ -58,6 +60,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
             <td><img src="${imageURL}" alt="Product Image" class="img-thumbnail" style="width: 50px; height: 50px;"></td>
             <td>${productName}</td>
             <td>₱${productPrice}</td>
+            <td>${productDescription}</td>
             <td>
                 <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#productModal">Edit</button>
                 <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
@@ -85,6 +88,7 @@ function editProduct() {
     currentEditRow = this.closest("tr");
     document.getElementById("productName").value = currentEditRow.cells[2].textContent;
     document.getElementById("productPrice").value = currentEditRow.cells[3].textContent;
+    document.getElementById("productDescription").value = currentEditRow.cells[4].textContent;
     document.getElementById("productImage").value = ""; // Clear the file input
      
 }
@@ -187,6 +191,7 @@ document.getElementById("productForm").addEventListener("submit", function (e) {
 
     const productName = document.getElementById("productName").value;
     const productPrice = document.getElementById("productPrice").value;
+    const productDescription = document.getElementById("productDescription").value;
     const productImage = document.getElementById("productImage").files[0];
 
     let imageURL = "";

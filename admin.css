@@ -93,3 +93,47 @@
       margin-left: -15rem;
     }
   }
+
+  /* Style for the description container */
+.description {
+  position: relative;
+  font-size: 12px;
+  color: #555;
+}
+
+/* Short description only visible by default */
+.short-description {
+  display: block;
+  max-height: 3em; /* Limit the height for neat truncation */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Full description hidden initially */
+.full-description {
+  display: none;
+  padding-top: 5px;
+}
+
+/* Button to show more or less text */
+.toggle-description {
+  color: #007bff;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* When the user clicks "Read More", show the full description */
+.description.show-full .short-description {
+  display: none;
+}
+
+.description.show-full .full-description {
+  display: block;
+}
+
+.description.show-full .toggle-description {
+  display: none;
+}
